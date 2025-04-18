@@ -15,38 +15,41 @@ interface PresetCardProps {
 
 const PresetCard: React.FC<PresetCardProps> = ({ title, description, downloadUrl, images }) => {
   return (
-    <div className="preset-section w-full flex flex-col lg:flex-row gap-8 md:gap-12 py-8 md:py-12 border-t border-teendad-border">
-      <div className="lg:w-1/4 flex flex-col justify-start">
-        <h2 className="font-cursive text-3xl md:text-4xl mb-2">{title}</h2>
-        <p className="text-teendad-text/80 mb-6">{description}</p>
-        <a 
-          href={downloadUrl} 
-          className="download-button w-fit"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Download
-        </a>
-      </div>
-      
-      <div className="lg:w-3/4 grid grid-cols-2 md:grid-cols-3 gap-4">
-        {images && images.length > 0 ? (
-          images.map((image, index) => (
-            <div 
-              key={index} 
-              className={`image-grid-item ${index === 1 ? 'row-span-2 md:col-span-1' : ''}`}
-            >
-              <img 
-                src={image.src || ''} 
-                alt={image.alt || 'Preset example image'}
-                loading="lazy"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))
-        ) : (
-          <p>No example images available</p>
-        )}
+    <div className="ambient-card my-10 max-w-3xl mx-auto overflow-hidden fade-up" style={{ animationDelay: '0.2s' }}>
+      <div className="flex flex-col md:flex-row gap-6">
+        <div className="md:w-1/2">
+          <h2 className="text-2xl md:text-3xl mb-3 font-medium text-white">{title}</h2>
+          <p className="text-white/80 mb-6 font-light">{description}</p>
+          
+          <a 
+            href={downloadUrl} 
+            className="pill-button inline-block"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Download
+          </a>
+        </div>
+        
+        <div className="md:w-1/2 grid grid-cols-1 gap-4">
+          {images && images.length > 0 ? (
+            images.slice(0, 2).map((image, index) => (
+              <div 
+                key={index} 
+                className="image-preview"
+              >
+                <img 
+                  src={image.src || ''} 
+                  alt={image.alt || 'Preset example image'}
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg"
+                />
+              </div>
+            ))
+          ) : (
+            <p className="text-white/70">No example images available</p>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -13,18 +13,22 @@ const Index: React.FC = () => {
       <div className="max-w-6xl w-full mx-auto px-4">
         <Header />
         
-        <main className="flex-1">
-          <h1 className="font-cursive text-4xl md:text-5xl lg:text-6xl text-center my-16 opacity-0 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            Some of my favourites
-          </h1>
+        <main className="flex-1 py-8 md:py-12">
+          <div className="text-center max-w-3xl mx-auto mb-20 opacity-0 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl text-white leading-tight mb-6">
+              <div className="mb-3 text-reveal" style={{ animationDelay: '0.5s' }}>my favourite tones</div>
+              <div className="mb-3 text-reveal" style={{ animationDelay: '0.7s' }}>for how it feels,</div>
+              <div className="text-reveal" style={{ animationDelay: '0.9s' }}>not how it looks</div>
+            </h1>
+          </div>
           
-          <div className="mb-20">
+          <div className="mb-20 space-y-12 md:space-y-16">
             {isLoading ? (
-              <p className="text-center text-teendad-text/80">Loading presets...</p>
+              <p className="text-center text-white/80 py-12">Loading presets...</p>
             ) : error ? (
-              <p className="text-center text-red-500">Failed to load presets</p>
+              <p className="text-center text-red-400 py-12">Failed to load presets</p>
             ) : presets?.length === 0 ? (
-              <p className="text-center text-teendad-text/80">No presets available yet</p>
+              <p className="text-center text-white/80 py-12">No presets available yet</p>
             ) : (
               presets?.map((preset) => (
                 <PresetCard

@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -70,8 +71,8 @@ export default {
         }
       },
       fontFamily: {
-        cursive: ['Playfair Display', 'serif'],
-        sans: ['Inter', 'sans-serif']
+        serif: ['Playfair Display', 'Georgia', 'serif'],
+        sans: ['Inter', 'SF Pro Display', 'system-ui', 'sans-serif']
       },
       spacing: {
         'section': '60px'
