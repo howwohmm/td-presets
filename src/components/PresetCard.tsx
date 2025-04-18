@@ -30,19 +30,23 @@ const PresetCard: React.FC<PresetCardProps> = ({ title, description, downloadUrl
       </div>
       
       <div className="lg:w-3/4 grid grid-cols-2 md:grid-cols-3 gap-4">
-        {images.map((image, index) => (
-          <div 
-            key={index} 
-            className={`image-grid-item ${index === 1 ? 'row-span-2 md:col-span-1' : ''}`}
-          >
-            <img 
-              src={image.src} 
-              alt={image.alt}
-              loading="lazy"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        ))}
+        {images && images.length > 0 ? (
+          images.map((image, index) => (
+            <div 
+              key={index} 
+              className={`image-grid-item ${index === 1 ? 'row-span-2 md:col-span-1' : ''}`}
+            >
+              <img 
+                src={image.src || ''} 
+                alt={image.alt || 'Preset example image'}
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))
+        ) : (
+          <p>No example images available</p>
+        )}
       </div>
     </div>
   );

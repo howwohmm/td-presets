@@ -2,6 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import type { Preset } from '@/types/preset';
+import { convertJsonToExampleImages } from '@/types/preset';
 
 export function usePresets() {
   return useQuery({
@@ -13,7 +14,12 @@ export function usePresets() {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      return data || [];
+      
+      // Transform the data to match our Preset interface
+      return (data || []).map(item => ({
+        ...item,
+        example_images: convertJsonToExampleImages(item.example_images)
+      }));
     }
   });
 }
