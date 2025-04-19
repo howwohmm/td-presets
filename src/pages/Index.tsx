@@ -13,10 +13,10 @@ const Index: React.FC = () => {
         <Header />
         
         <main className="flex-1 py-8 md:py-12">
-          <div className="text-center max-w-3xl mx-auto mb-20 opacity-0 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl text-white leading-tight mb-6">
+          <div className="text-center max-w-3xl mx-auto mb-16 opacity-0 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <h3 className="font-serif text-2xl md:text-3xl lg:text-4xl text-white leading-tight mb-6 whitespace-nowrap overflow-hidden text-ellipsis">
               <div className="text-reveal" style={{ animationDelay: '0.5s' }}>my fave presets for my fave janta :)</div>
-            </h1>
+            </h3>
           </div>
           
           <div className="mb-20 space-y-12 md:space-y-16">
