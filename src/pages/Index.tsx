@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -16,9 +15,7 @@ const Index: React.FC = () => {
         <main className="flex-1 py-8 md:py-12">
           <div className="text-center max-w-3xl mx-auto mb-20 opacity-0 animate-fade-in" style={{ animationDelay: '0.3s' }}>
             <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl text-white leading-tight mb-6">
-              <div className="mb-3 text-reveal" style={{ animationDelay: '0.5s' }}>my favourite tones</div>
-              <div className="mb-3 text-reveal" style={{ animationDelay: '0.7s' }}>for how it feels,</div>
-              <div className="text-reveal" style={{ animationDelay: '0.9s' }}>not how it looks</div>
+              <div className="text-reveal" style={{ animationDelay: '0.5s' }}>my fave presets for my fave janta :)</div>
             </h1>
           </div>
           
