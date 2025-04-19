@@ -30,6 +30,7 @@ const Index: React.FC = () => {
               presets?.map((preset) => (
                 <PresetCard
                   key={preset.id}
+                  id={preset.id}
                   title={preset.preset_title}
                   description={preset.short_description}
                   downloadUrl={preset.preset_file}
