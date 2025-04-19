@@ -1,22 +1,16 @@
-# Welcome to your Lovable project
+# teendadniyan Photography Presets
 
-## Project info
+## Project Overview
 
-**URL**: https://lovable.dev/projects/9a8ce45f-e677-44de-9c62-e97e821a2a30
+This is a web application for browsing and purchasing premium photography presets by teendadniyan.
 
-## How can I edit this code?
+## How to Use This Codebase
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/9a8ce45f-e677-44de-9c62-e97e821a2a30) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
+There are several ways to work with this codebase:
 
 **Use your preferred IDE**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+You can work locally using your own IDE by cloning this repository and pushing changes.
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
@@ -50,7 +44,7 @@ npm run dev
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
-## What technologies are used for this project?
+## Technologies Used
 
 This project is built with:
 
@@ -60,14 +54,16 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
+## Deployment
 
-Simply open [Lovable](https://lovable.dev/projects/9a8ce45f-e677-44de-9c62-e97e821a2a30) and click on Share -> Publish.
+You can deploy this project to any hosting service that supports static websites, such as:
 
-## Can I connect a custom domain to my Lovable project?
+- Vercel
+- Netlify
+- GitHub Pages
+- AWS S3
+- Firebase Hosting
 
-Yes, you can!
+## Custom Domain Setup
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+To connect a custom domain to your deployed project, follow the documentation of your chosen hosting provider.
