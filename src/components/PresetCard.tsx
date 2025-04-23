@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { Download, Trash2 } from 'lucide-react';
 
 interface ImageInfo {
   src: string;
@@ -52,55 +54,52 @@ const PresetCard: React.FC<PresetCardProps> = ({ id, title, description, downloa
     }
   };
 
+  // Get the first image for thumbnail
+  const thumbnailImage = images && images.length > 0 ? images[0] : null;
+  
   return (
-    <div className="ambient-card my-10 max-w-3xl mx-auto overflow-hidden fade-up" style={{ animationDelay: '0.2s' }}>
-      <div className="flex flex-col md:flex-row gap-6">
-        <div className="md:w-1/2">
-          <h2 className="text-2xl md:text-3xl mb-3 font-medium text-white">{title}</h2>
-          <p className="text-white/80 mb-6 font-light">{description}</p>
-          
-          <div className="flex items-center gap-4">
-            <a 
-              href={downloadUrl} 
-              className="pill-button inline-block"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Download
-            </a>
-            
-            {/* Delete button only visible to admin */}
-            {isLoggedIn && (
-              <button
-                onClick={handleDelete}
-                disabled={deleteMutation.isPending}
-                className="text-sm text-red-400 hover:text-red-300 border-b border-red-400 hover:border-red-300 pb-0.5 transition-colors disabled:opacity-50"
-              >
-                {deleteMutation.isPending ? 'Deleting...' : 'Delete'}
-              </button>
-            )}
+    <div className="ambient-card h-full flex flex-col fade-up" style={{ animationDelay: '0.2s' }}>
+      <div className="relative h-48 mb-4 rounded-lg overflow-hidden">
+        {thumbnailImage ? (
+          <img 
+            src={thumbnailImage.src} 
+            alt={thumbnailImage.alt || `${title} thumbnail`} 
+            className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+          />
+        ) : (
+          <div className="w-full h-full bg-white/20 flex items-center justify-center text-white/50">
+            No image
           </div>
-        </div>
+        )}
+      </div>
+      
+      <div className="flex-grow">
+        <h2 className="text-lg font-medium text-white mb-2 line-clamp-1">{title}</h2>
+        <p className="text-white/80 text-sm mb-4 line-clamp-2">{description}</p>
+      </div>
+      
+      <div className="flex items-center gap-2 mt-auto pt-3 border-t border-white/10">
+        <a 
+          href={downloadUrl} 
+          className="pill-button inline-flex items-center justify-center gap-1.5 w-full text-sm py-2.5"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Download ${title} preset`}
+        >
+          <Download size={16} />
+          Download
+        </a>
         
-        <div className="md:w-1/2 grid grid-cols-1 gap-4">
-          {images && images.length > 0 ? (
-            images.slice(0, 2).map((image, index) => (
-              <div 
-                key={index} 
-                className="image-preview"
-              >
-                <img 
-                  src={image.src || ''} 
-                  alt={image.alt || 'Preset example image'}
-                  loading="lazy"
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              </div>
-            ))
-          ) : (
-            <p className="text-white/70">No example images available</p>
-          )}
-        </div>
+        {isLoggedIn && (
+          <button
+            onClick={handleDelete}
+            disabled={deleteMutation.isPending}
+            className="p-2.5 rounded-full bg-white/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 transition-colors disabled:opacity-50"
+            aria-label="Delete preset"
+          >
+            <Trash2 size={16} />
+          </button>
+        )}
       </div>
     </div>
   );

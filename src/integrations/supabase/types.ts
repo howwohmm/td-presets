@@ -14,24 +14,30 @@ export type Database = {
           created_at: string | null
           example_images: Json
           id: string
+          is_paid: boolean
           preset_file: string
           preset_title: string
+          price: number | null
           short_description: string
         }
         Insert: {
           created_at?: string | null
           example_images: Json
           id?: string
+          is_paid?: boolean
           preset_file: string
           preset_title: string
+          price?: number | null
           short_description: string
         }
         Update: {
           created_at?: string | null
           example_images?: Json
           id?: string
+          is_paid?: boolean
           preset_file?: string
           preset_title?: string
+          price?: number | null
           short_description?: string
         }
         Relationships: []

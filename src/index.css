@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Georgia:wght@400&display=swap');
@@ -111,29 +110,16 @@
 
 /* Ambient UI Card */
 .ambient-card {
-  @apply bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl p-6 shadow-lg transition-all duration-500;
+  @apply bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl p-5 shadow-lg transition-all duration-300;
 }
 
 .ambient-card:hover {
-  @apply shadow-xl transform translate-y-[-5px] bg-white/30;
+  @apply shadow-xl bg-white/30 transform-gpu translate-y-[-2px];
 }
 
 /* Button Styles */
 .pill-button {
-  @apply px-6 py-3 bg-white/80 backdrop-blur-sm rounded-full font-medium text-slate-700 shadow-md transition-all duration-300 hover:shadow-lg hover:bg-white/90 hover:transform hover:translate-y-[-2px];
-}
-
-/* Image Preview */
-.image-preview {
-  @apply rounded-lg overflow-hidden my-4 transition-all duration-500;
-}
-
-.image-preview img {
-  @apply w-full h-auto object-cover transition-transform duration-700;
-}
-
-.image-preview:hover img {
-  @apply transform scale-110;
+  @apply px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full font-medium text-slate-700 shadow-md transition-all duration-300 hover:shadow-lg hover:bg-white/90 hover:transform hover:translate-y-[-1px];
 }
 
 /* Animation Classes */
@@ -151,7 +137,7 @@
 @keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(15px);
   }
   to {
     opacity: 1;
@@ -171,15 +157,15 @@
 }
 
 .fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
+  animation: fadeIn 0.6s ease-out forwards;
 }
 
 .fade-up {
-  animation: fadeUp 1s ease-out forwards;
+  animation: fadeUp 0.8s ease-out forwards;
 }
 
 .text-reveal {
-  animation: textReveal 1.2s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+  animation: textReveal 1s cubic-bezier(0.77, 0, 0.18, 1) forwards;
 }
 
 .fade-stagger > * {
@@ -187,21 +173,50 @@
 }
 
 .fade-stagger > *:nth-child(1) {
-  animation: fadeUp 0.8s ease-out 0.1s forwards;
+  animation: fadeUp 0.6s ease-out 0.1s forwards;
 }
 
 .fade-stagger > *:nth-child(2) {
-  animation: fadeUp 0.8s ease-out 0.3s forwards;
+  animation: fadeUp 0.6s ease-out 0.2s forwards;
 }
 
 .fade-stagger > *:nth-child(3) {
-  animation: fadeUp 0.8s ease-out 0.5s forwards;
+  animation: fadeUp 0.6s ease-out 0.3s forwards;
 }
 
 .fade-stagger > *:nth-child(4) {
-  animation: fadeUp 0.8s ease-out 0.7s forwards;
+  animation: fadeUp 0.6s ease-out 0.4s forwards;
 }
 
 .fade-stagger > *:nth-child(5) {
-  animation: fadeUp 0.8s ease-out 0.9s forwards;
+  animation: fadeUp 0.6s ease-out 0.5s forwards;
+}
+
+/* Line clamp utilities */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Loading animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
