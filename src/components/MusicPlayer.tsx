@@ -2,6 +2,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Play, Pause, Volume2 } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
+import { toast } from 'sonner';
 
 interface MusicPlayerProps {
   audioSrc: string;
@@ -12,6 +13,7 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ audioSrc, defaultVolume = 0.5
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(defaultVolume);
+  const [audioLoaded, setAudioLoaded] = useState(false);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -21,9 +23,21 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ audioSrc, defaultVolume = 0.5
 
   useEffect(() => {
     // Create audio element
-    const audio = new Audio(audioSrc);
+    const audio = new Audio();
     audio.loop = true;
     audio.volume = volume;
+    audio.src = audioSrc;
+    
+    // Handle loading events
+    audio.oncanplaythrough = () => {
+      setAudioLoaded(true);
+    };
+    
+    audio.onerror = (error) => {
+      console.error("Audio failed to load:", error);
+      toast.error("Failed to load audio file");
+    };
+    
     audioRef.current = audio;
 
     return () => {
@@ -35,17 +49,21 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ audioSrc, defaultVolume = 0.5
   }, [audioSrc, volume]);
 
   useEffect(() => {
-    if (!audioRef.current) return;
+    if (!audioRef.current || !audioLoaded) return;
     
     if (isPlaying) {
-      audioRef.current.play().catch(error => {
-        console.error("Audio playback failed:", error);
-        setIsPlaying(false);
-      });
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.error("Audio playback failed:", error);
+          setIsPlaying(false);
+          toast.error("Audio playback failed. Try clicking play again.");
+        });
+      }
     } else {
       audioRef.current.pause();
     }
-  }, [isPlaying]);
+  }, [isPlaying, audioLoaded]);
 
   const togglePlayPause = () => {
     setIsPlaying(!isPlaying);
@@ -78,6 +96,7 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ audioSrc, defaultVolume = 0.5
             max={1}
             step={0.01}
             onValueChange={handleVolumeChange}
+            className="bg-opacity-30"
           />
         </div>
       </div>

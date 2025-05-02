@@ -51,6 +51,7 @@ const AdminMusicUploader: React.FC = () => {
       
       // Create a blob URL for the audio file (for local use)
       const audioUrl = URL.createObjectURL(musicFile);
+      console.log("Created blob URL for audio:", audioUrl);
       
       // Create the background music object
       const backgroundMusic: BackgroundMusic = {
@@ -63,8 +64,9 @@ const AdminMusicUploader: React.FC = () => {
       
       // Store in localStorage for now
       localStorage.setItem('backgroundMusic', JSON.stringify(backgroundMusic));
+      console.log("Saved to localStorage:", backgroundMusic);
         
-      toast.success('Music uploaded successfully!');
+      toast.success('Music uploaded successfully! Refresh the page to hear it.');
       setMusicFile(null);
       setMusicTitle('');
       

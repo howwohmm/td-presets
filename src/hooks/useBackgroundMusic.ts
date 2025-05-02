@@ -1,6 +1,5 @@
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 
 export interface BackgroundMusic {
   id: string;
@@ -16,14 +15,17 @@ export function useBackgroundMusic() {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    // For now, we'll use localStorage to simulate background music functionality
-    // since the database table doesn't exist yet
     const fetchMusic = () => {
       try {
         setLoading(true);
         const savedMusic = localStorage.getItem('backgroundMusic');
+        
         if (savedMusic) {
-          setBackgroundMusic(JSON.parse(savedMusic) as BackgroundMusic);
+          const parsedMusic = JSON.parse(savedMusic) as BackgroundMusic;
+          console.log("Loaded background music from localStorage:", parsedMusic);
+          setBackgroundMusic(parsedMusic);
+        } else {
+          console.log("No background music found in localStorage");
         }
       } catch (err: any) {
         console.error('Error fetching background music:', err);
