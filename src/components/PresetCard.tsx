@@ -1,10 +1,10 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { Download, Trash2 } from 'lucide-react';
+import { Download, Trash2, Image } from 'lucide-react';
 
 interface ImageInfo {
   src: string;
@@ -34,6 +34,7 @@ const deletePreset = async (presetId: string) => {
 const PresetCard: React.FC<PresetCardProps> = ({ id, title, description, downloadUrl, images }) => {
   const { isLoggedIn } = useAuth();
   const queryClient = useQueryClient();
+  const [isHovered, setIsHovered] = useState(false);
 
   // Set up mutation for deleting
   const deleteMutation = useMutation({
@@ -58,30 +59,44 @@ const PresetCard: React.FC<PresetCardProps> = ({ id, title, description, downloa
   const thumbnailImage = images && images.length > 0 ? images[0] : null;
   
   return (
-    <div className="ambient-card h-full flex flex-col fade-up" style={{ animationDelay: '0.2s' }}>
-      <div className="relative h-48 mb-4 rounded-lg overflow-hidden">
+    <div 
+      className="ambient-card h-full flex flex-col fade-up transform transition-all duration-500 hover:translate-y-[-6px] hover:shadow-xl"
+      style={{ animationDelay: '0.2s' }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="relative h-52 mb-4 rounded-lg overflow-hidden group">
         {thumbnailImage ? (
-          <img 
-            src={thumbnailImage.src} 
-            alt={thumbnailImage.alt || `${title} thumbnail`} 
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-          />
+          <>
+            <img 
+              src={thumbnailImage.src} 
+              alt={thumbnailImage.alt || `${title} thumbnail`} 
+              className={`w-full h-full object-cover transition-all duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`}
+            />
+            {images.length > 1 && (
+              <div className="absolute bottom-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs py-1 px-2 rounded-full flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <Image size={12} />
+                <span>{images.length}</span>
+              </div>
+            )}
+          </>
         ) : (
           <div className="w-full h-full bg-white/20 flex items-center justify-center text-white/50">
             No image
           </div>
         )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </div>
       
       <div className="flex-grow">
-        <h2 className="text-lg font-medium text-white mb-2 line-clamp-1">{title}</h2>
+        <h2 className="text-xl font-medium text-white mb-2 line-clamp-1">{title}</h2>
         <p className="text-white/80 text-sm mb-4 line-clamp-2">{description}</p>
       </div>
       
       <div className="flex items-center gap-2 mt-auto pt-3 border-t border-white/10">
         <a 
           href={downloadUrl} 
-          className="pill-button inline-flex items-center justify-center gap-1.5 w-full text-sm py-2.5"
+          className="pill-button inline-flex items-center justify-center gap-1.5 w-full text-sm py-2.5 hover:bg-blue-50"
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Download ${title} preset`}
