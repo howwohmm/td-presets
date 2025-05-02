@@ -5,11 +5,18 @@ import Footer from '../components/Footer';
 import PresetCard from '../components/PresetCard';
 import { usePresets } from '../hooks/usePresets';
 import { LayoutGrid, Search } from 'lucide-react';
+import ReactiveBackground from '../components/ReactiveBackground';
+import MusicPlayer from '../components/MusicPlayer';
+import { useBackgroundMusic } from '../hooks/useBackgroundMusic';
+import { useAuth } from '@/hooks/useAuth';
+import AdminMusicUploader from '@/components/AdminMusicUploader';
 
 const Index: React.FC = () => {
   const { data: presets, isLoading, error } = usePresets();
   const [searchTerm, setSearchTerm] = useState('');
   const [scrollPosition, setScrollPosition] = useState(0);
+  const { backgroundMusic } = useBackgroundMusic();
+  const { isLoggedIn } = useAuth();
   
   const filteredPresets = presets?.filter(preset => 
     preset.preset_title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -29,6 +36,8 @@ const Index: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <ReactiveBackground />
+      
       <div 
         className="fixed inset-0 -z-10 bg-gradient-radial" 
         style={{ 
@@ -37,10 +46,18 @@ const Index: React.FC = () => {
         }}
       ></div>
       
+      {backgroundMusic && <MusicPlayer audioSrc={backgroundMusic.file_url} defaultVolume={0.5} />}
+      
       <div className="max-w-7xl w-full mx-auto px-4 relative z-10">
         <Header />
         
         <main className="flex-1 py-8 md:py-12">
+          {isLoggedIn && (
+            <div className="mb-12 max-w-md mx-auto">
+              <AdminMusicUploader />
+            </div>
+          )}
+        
           <div className="text-center max-w-3xl mx-auto mb-14 opacity-0 animate-fade-in" style={{ animationDelay: '0.3s' }}>
             <h3 className="font-serif text-2xl md:text-3xl lg:text-4xl text-white leading-tight mb-6">
               <div className="text-reveal" style={{ animationDelay: '0.5s' }}>my fave presets for my fave janta :)</div>

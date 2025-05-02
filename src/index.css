@@ -99,6 +99,7 @@
     min-height: 100vh;
     backdrop-filter: blur(40px);
     overflow-x: hidden;
+    cursor: none; /* Hide default cursor when using custom cursor */
   }
   
   ::selection {
@@ -107,6 +108,11 @@
   
   h1, h2, h3 {
     @apply font-serif;
+  }
+  
+  /* Hide cursor on interactive elements */
+  a, button, input, textarea, select {
+    cursor: none;
   }
 }
 
@@ -252,4 +258,9 @@
 
 .glass-input {
   @apply bg-white/10 backdrop-blur border border-white/20;
+}
+
+/* Rotate utility for vertical slider */
+.rotate-270 {
+  transform: rotate(270deg);
 }

@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import React from "react";
 import { AuthProvider } from "./contexts/AuthProvider";
+import CursorEffect from "./components/CursorEffect";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -26,6 +27,7 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
+          <CursorEffect />
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
