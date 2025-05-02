@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
-interface BackgroundMusic {
+export interface BackgroundMusic {
   id: string;
   title: string;
   file_url: string;
@@ -16,52 +16,24 @@ export function useBackgroundMusic() {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    async function fetchActiveBackgroundMusic() {
+    // For now, we'll use localStorage to simulate background music functionality
+    // since the database table doesn't exist yet
+    const fetchMusic = () => {
       try {
         setLoading(true);
-        
-        // Query the background_music table for the active music
-        const { data, error } = await supabase
-          .from('background_music')
-          .select('*')
-          .eq('is_active', true)
-          .order('created_at', { ascending: false })
-          .limit(1)
-          .single();
-          
-        if (error) throw error;
-        
-        setBackgroundMusic(data as BackgroundMusic);
+        const savedMusic = localStorage.getItem('backgroundMusic');
+        if (savedMusic) {
+          setBackgroundMusic(JSON.parse(savedMusic) as BackgroundMusic);
+        }
       } catch (err: any) {
         console.error('Error fetching background music:', err);
         setError(err);
       } finally {
         setLoading(false);
       }
-    }
-
-    fetchActiveBackgroundMusic();
-    
-    // Set up a subscription for real-time updates
-    const subscription = supabase
-      .channel('background_music_changes')
-      .on('postgres_changes', 
-        { 
-          event: '*', 
-          schema: 'public', 
-          table: 'background_music',
-          filter: 'is_active=eq.true'
-        }, 
-        (payload) => {
-          // Refresh the background music when it changes
-          fetchActiveBackgroundMusic();
-        }
-      )
-      .subscribe();
-      
-    return () => {
-      subscription.unsubscribe();
     };
+
+    fetchMusic();
   }, []);
 
   return { backgroundMusic, loading, error };

@@ -1,9 +1,16 @@
 
 import React, { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Upload, Music } from 'lucide-react';
+
+interface BackgroundMusic {
+  id: string;
+  title: string;
+  file_url: string;
+  is_active: boolean;
+  created_at: string;
+}
 
 const AdminMusicUploader: React.FC = () => {
   const [isUploading, setIsUploading] = useState(false);
@@ -42,34 +49,21 @@ const AdminMusicUploader: React.FC = () => {
     try {
       setIsUploading(true);
       
-      // Upload to Supabase storage
-      const fileExt = musicFile.name.split('.').pop();
-      const fileName = `${Date.now()}_${musicTitle.replace(/\s/g, '_')}.${fileExt}`;
+      // Create a blob URL for the audio file (for local use)
+      const audioUrl = URL.createObjectURL(musicFile);
       
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('background_music')
-        .upload(fileName, musicFile);
+      // Create the background music object
+      const backgroundMusic: BackgroundMusic = {
+        id: Date.now().toString(),
+        title: musicTitle,
+        file_url: audioUrl,
+        is_active: true,
+        created_at: new Date().toISOString()
+      };
+      
+      // Store in localStorage for now
+      localStorage.setItem('backgroundMusic', JSON.stringify(backgroundMusic));
         
-      if (uploadError) throw uploadError;
-      
-      // Get public URL
-      const { data: publicUrlData } = supabase.storage
-        .from('background_music')
-        .getPublicUrl(fileName);
-        
-      const audioUrl = publicUrlData.publicUrl;
-      
-      // Store in database
-      const { error: dbError } = await supabase
-        .from('background_music')
-        .insert({
-          title: musicTitle,
-          file_url: audioUrl,
-          is_active: true
-        });
-        
-      if (dbError) throw dbError;
-      
       toast.success('Music uploaded successfully!');
       setMusicFile(null);
       setMusicTitle('');

@@ -32,7 +32,7 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ audioSrc, defaultVolume = 0.5
         audioRef.current = null;
       }
     };
-  }, [audioSrc]);
+  }, [audioSrc, volume]);
 
   useEffect(() => {
     if (!audioRef.current) return;
