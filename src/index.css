@@ -95,11 +95,8 @@
 
   body {
     @apply font-sans text-slate-700;
-    background: radial-gradient(circle at center, #0080FF 0%, #003366 100%);
     min-height: 100vh;
-    backdrop-filter: blur(40px);
     overflow-x: hidden;
-    cursor: none; /* Hide default cursor when using custom cursor */
   }
   
   ::selection {
@@ -109,11 +106,12 @@
   h1, h2, h3 {
     @apply font-serif;
   }
-  
-  /* Hide cursor on interactive elements */
-  a, button, input, textarea, select {
-    cursor: none;
-  }
+}
+
+/* Static gradient background inspired by the uploaded image */
+.bg-static-gradient {
+  background: linear-gradient(180deg, #e5e5e5 0%, #e5e5e5 40%, #f9a5a5 60%, #f34848 100%);
+  background-attachment: fixed;
 }
 
 /* Ambient UI Card */
@@ -123,12 +121,6 @@
 
 .ambient-card:hover {
   @apply shadow-xl bg-white/30 backdrop-blur-xl border-white/40;
-}
-
-/* Background gradient */
-.bg-gradient-radial {
-  background: radial-gradient(circle at center, #0080FF 0%, #003366 100%);
-  background-size: 120% 120%;
 }
 
 /* Button Styles */
@@ -168,22 +160,6 @@
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     opacity: 1;
   }
-}
-
-@keyframes floatAnimation {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-.animate-float {
-  animation: floatAnimation 3s ease-in-out infinite;
 }
 
 .fade-in {
@@ -258,9 +234,4 @@
 
 .glass-input {
   @apply bg-white/10 backdrop-blur border border-white/20;
-}
-
-/* Rotate utility for vertical slider */
-.rotate-270 {
-  transform: rotate(270deg);
 }

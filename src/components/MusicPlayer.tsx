@@ -60,7 +60,7 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ audioSrc, defaultVolume = 0.5
   };
 
   return (
-    <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-20 bg-white/10 backdrop-blur-lg p-3 rounded-full flex flex-col items-center gap-3 border border-white/20">
+    <div className="fixed right-6 top-6 z-20 bg-white/10 backdrop-blur-lg rounded-lg border border-white/20 p-3 flex items-center gap-4">
       <button 
         onClick={togglePlayPause} 
         className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-all"
@@ -69,17 +69,15 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ audioSrc, defaultVolume = 0.5
         {isPlaying ? <Pause size={18} /> : <Play size={18} />}
       </button>
       
-      <div className="h-24 flex flex-col items-center">
-        <Volume2 size={14} className="text-white/70 mb-2" />
-        <div className="rotate-270 transform h-20">
+      <div className="flex items-center gap-3">
+        <Volume2 size={16} className="text-white/70" />
+        <div className="w-24">
           <Slider
-            orientation="vertical"
             value={[volume]}
             min={0}
             max={1}
             step={0.01}
             onValueChange={handleVolumeChange}
-            className="h-full"
           />
         </div>
       </div>

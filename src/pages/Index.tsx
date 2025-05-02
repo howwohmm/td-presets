@@ -1,11 +1,10 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import PresetCard from '../components/PresetCard';
 import { usePresets } from '../hooks/usePresets';
 import { LayoutGrid, Search } from 'lucide-react';
-import ReactiveBackground from '../components/ReactiveBackground';
 import MusicPlayer from '../components/MusicPlayer';
 import { useBackgroundMusic } from '../hooks/useBackgroundMusic';
 import { useAuth } from '@/hooks/useAuth';
@@ -14,7 +13,6 @@ import AdminMusicUploader from '@/components/AdminMusicUploader';
 const Index: React.FC = () => {
   const { data: presets, isLoading, error } = usePresets();
   const [searchTerm, setSearchTerm] = useState('');
-  const [scrollPosition, setScrollPosition] = useState(0);
   const { backgroundMusic } = useBackgroundMusic();
   const { isLoggedIn } = useAuth();
   
@@ -23,28 +21,9 @@ const Index: React.FC = () => {
     preset.short_description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollPosition(window.scrollY);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const parallaxValue = scrollPosition * 0.1;
-
   return (
     <div className="min-h-screen flex flex-col">
-      <ReactiveBackground />
-      
-      <div 
-        className="fixed inset-0 -z-10 bg-gradient-radial" 
-        style={{ 
-          backgroundPosition: `center ${50 - parallaxValue * 0.5}%`,
-          transition: 'background-position 0.1s ease-out'
-        }}
-      ></div>
+      <div className="fixed inset-0 -z-10 bg-static-gradient"></div>
       
       {backgroundMusic && <MusicPlayer audioSrc={backgroundMusic.file_url} defaultVolume={0.5} />}
       
