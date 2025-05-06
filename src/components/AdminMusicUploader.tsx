@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Upload, Music } from 'lucide-react';
+import { useBackgroundMusic } from '@/hooks/useBackgroundMusic';
 
 interface BackgroundMusic {
   id: string;
@@ -16,6 +17,7 @@ const AdminMusicUploader: React.FC = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [musicFile, setMusicFile] = useState<File | null>(null);
   const [musicTitle, setMusicTitle] = useState('');
+  const { setActiveMusic } = useBackgroundMusic();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -62,13 +64,16 @@ const AdminMusicUploader: React.FC = () => {
         created_at: new Date().toISOString()
       };
       
-      // Store in localStorage for now
-      localStorage.setItem('backgroundMusic', JSON.stringify(backgroundMusic));
-      console.log("Saved to localStorage:", backgroundMusic);
-        
-      toast.success('Music uploaded successfully! Refresh the page to hear it.');
-      setMusicFile(null);
-      setMusicTitle('');
+      // Use our hook to set the active music
+      const success = await setActiveMusic(backgroundMusic);
+      
+      if (success) {
+        toast.success('Music uploaded successfully! Refresh the page to hear it.');
+        setMusicFile(null);
+        setMusicTitle('');
+      } else {
+        toast.error('Failed to set music as active');
+      }
       
     } catch (error: any) {
       toast.error(`Upload failed: ${error.message}`);

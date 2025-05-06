@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import PresetCard from '../components/PresetCard';
@@ -9,12 +9,20 @@ import MusicPlayer from '../components/MusicPlayer';
 import { useBackgroundMusic } from '../hooks/useBackgroundMusic';
 import { useAuth } from '@/hooks/useAuth';
 import AdminMusicUploader from '@/components/AdminMusicUploader';
+import { toast } from 'sonner';
 
 const Index: React.FC = () => {
   const { data: presets, isLoading, error } = usePresets();
   const [searchTerm, setSearchTerm] = useState('');
-  const { backgroundMusic } = useBackgroundMusic();
+  const { backgroundMusic, loading: musicLoading } = useBackgroundMusic();
   const { isLoggedIn } = useAuth();
+  
+  // Notify when music is available but not auto-playing
+  useEffect(() => {
+    if (backgroundMusic && !musicLoading) {
+      toast.info('Music is ready to play! Click the play button to listen.');
+    }
+  }, [backgroundMusic, musicLoading]);
   
   const filteredPresets = presets?.filter(preset => 
     preset.preset_title.toLowerCase().includes(searchTerm.toLowerCase()) ||

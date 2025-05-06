@@ -38,5 +38,18 @@ export function useBackgroundMusic() {
     fetchMusic();
   }, []);
 
-  return { backgroundMusic, loading, error };
+  const setActiveMusic = async (music: BackgroundMusic) => {
+    try {
+      // Store in localStorage
+      localStorage.setItem('backgroundMusic', JSON.stringify(music));
+      setBackgroundMusic(music);
+      return true;
+    } catch (err: any) {
+      console.error('Error setting active music:', err);
+      setError(err);
+      return false;
+    }
+  };
+
+  return { backgroundMusic, loading, error, setActiveMusic };
 }

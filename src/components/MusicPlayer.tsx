@@ -27,9 +27,11 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ audioSrc, defaultVolume = 0.5
     audio.loop = true;
     audio.volume = volume;
     audio.src = audioSrc;
+    audio.preload = "auto";
     
     // Handle loading events
     audio.oncanplaythrough = () => {
+      console.log("Audio can play through, ready state:", audio.readyState);
       setAudioLoaded(true);
     };
     
@@ -43,6 +45,7 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ audioSrc, defaultVolume = 0.5
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
+        audioRef.current.src = "";
         audioRef.current = null;
       }
     };
@@ -83,6 +86,7 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ audioSrc, defaultVolume = 0.5
         onClick={togglePlayPause} 
         className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-all"
         aria-label={isPlaying ? "Pause music" : "Play music"}
+        disabled={!audioLoaded}
       >
         {isPlaying ? <Pause size={18} /> : <Play size={18} />}
       </button>
