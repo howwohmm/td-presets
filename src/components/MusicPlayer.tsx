@@ -6,10 +6,11 @@ import { toast } from 'sonner';
 
 interface MusicPlayerProps {
   audioSrc: string;
+  audioData?: string; // Add support for base64 data
   defaultVolume?: number;
 }
 
-const MusicPlayer: React.FC<MusicPlayerProps> = ({ audioSrc, defaultVolume = 0.5 }) => {
+const MusicPlayer: React.FC<MusicPlayerProps> = ({ audioSrc, audioData, defaultVolume = 0.5 }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(defaultVolume);
@@ -26,7 +27,14 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ audioSrc, defaultVolume = 0.5
     const audio = new Audio();
     audio.loop = true;
     audio.volume = volume;
-    audio.src = audioSrc;
+    
+    // Use audioData (base64) if available, otherwise use audioSrc
+    if (audioData && audioData.startsWith('data:audio')) {
+      audio.src = audioData;
+    } else {
+      audio.src = audioSrc;
+    }
+    
     audio.preload = "auto";
     
     // Handle loading events
@@ -49,7 +57,7 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ audioSrc, defaultVolume = 0.5
         audioRef.current = null;
       }
     };
-  }, [audioSrc, volume]);
+  }, [audioSrc, audioData, volume]);
 
   useEffect(() => {
     if (!audioRef.current || !audioLoaded) return;

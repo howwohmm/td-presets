@@ -5,6 +5,7 @@ export interface BackgroundMusic {
   id: string;
   title: string;
   file_url: string;
+  audio_data?: string; // Add this for base64 data
   is_active: boolean;
   created_at: string;
 }
@@ -38,12 +39,42 @@ export function useBackgroundMusic() {
     fetchMusic();
   }, []);
 
-  const setActiveMusic = async (music: BackgroundMusic) => {
+  const setActiveMusic = async (music: BackgroundMusic, file?: File) => {
     try {
-      // Store in localStorage
-      localStorage.setItem('backgroundMusic', JSON.stringify(music));
-      setBackgroundMusic(music);
-      return true;
+      // If file is provided, read it as base64 data
+      if (file) {
+        return new Promise<boolean>((resolve) => {
+          const reader = new FileReader();
+          
+          reader.onload = (e) => {
+            const base64Data = e.target?.result as string;
+            
+            // Store the file data in the music object
+            const musicWithData: BackgroundMusic = {
+              ...music,
+              audio_data: base64Data
+            };
+            
+            // Store in localStorage
+            localStorage.setItem('backgroundMusic', JSON.stringify(musicWithData));
+            setBackgroundMusic(musicWithData);
+            resolve(true);
+          };
+          
+          reader.onerror = () => {
+            console.error('Error reading file as base64');
+            setError(new Error('Failed to process audio file'));
+            resolve(false);
+          };
+          
+          reader.readAsDataURL(file);
+        });
+      } else {
+        // Store in localStorage without file data
+        localStorage.setItem('backgroundMusic', JSON.stringify(music));
+        setBackgroundMusic(music);
+        return true;
+      }
     } catch (err: any) {
       console.error('Error setting active music:', err);
       setError(err);

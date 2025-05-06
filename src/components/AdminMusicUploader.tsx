@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
@@ -51,24 +50,23 @@ const AdminMusicUploader: React.FC = () => {
     try {
       setIsUploading(true);
       
-      // Create a blob URL for the audio file (for local use)
-      const audioUrl = URL.createObjectURL(musicFile);
-      console.log("Created blob URL for audio:", audioUrl);
+      // Create a temporary URL for reference (this won't be used for playback)
+      const tempUrl = URL.createObjectURL(musicFile);
       
       // Create the background music object
       const backgroundMusic: BackgroundMusic = {
         id: Date.now().toString(),
         title: musicTitle,
-        file_url: audioUrl,
+        file_url: tempUrl, // This is just for reference
         is_active: true,
         created_at: new Date().toISOString()
       };
       
-      // Use our hook to set the active music
-      const success = await setActiveMusic(backgroundMusic);
+      // Pass both the music object and the file to setActiveMusic
+      const success = await setActiveMusic(backgroundMusic, musicFile);
       
       if (success) {
-        toast.success('Music uploaded successfully! Refresh the page to hear it.');
+        toast.success('Music uploaded successfully!');
         setMusicFile(null);
         setMusicTitle('');
       } else {

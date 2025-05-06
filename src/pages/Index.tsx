@@ -33,7 +33,13 @@ const Index: React.FC = () => {
     <div className="min-h-screen flex flex-col">
       <div className="fixed inset-0 -z-10 bg-static-gradient"></div>
       
-      {backgroundMusic && <MusicPlayer audioSrc={backgroundMusic.file_url} defaultVolume={0.5} />}
+      {backgroundMusic && (
+        <MusicPlayer 
+          audioSrc={backgroundMusic.file_url} 
+          audioData={backgroundMusic.audio_data} 
+          defaultVolume={0.5} 
+        />
+      )}
       
       <div className="max-w-7xl w-full mx-auto px-4 relative z-10">
         <Header />
