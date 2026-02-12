@@ -1,69 +1,17 @@
-# teendadniyan Photography Presets
+# td-presets
 
-## Project Overview
+> Photography preset discovery platform with background music.
 
-This is a web application for browsing and purchasing premium photography presets by teendadniyan.
+![Status: Experiment](https://img.shields.io/badge/Status-Experiment-yellow)
 
-## How to Use This Codebase
+## What It Does
 
-There are several ways to work with this codebase:
+Browse and discover photography presets by teendadniyan. Features searchable preset cards, background music player with admin upload capability, and a curated preset library. Built for creators looking for specific editing styles.
 
-**Use your preferred IDE**
+## Tech Stack
 
-You can work locally using your own IDE by cloning this repository and pushing changes.
+`React` `Vite` `TypeScript` `Supabase` `shadcn/ui` `Tailwind CSS` `TanStack Query`
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## Technologies Used
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## Deployment
-
-You can deploy this project to any hosting service that supports static websites, such as:
-
-- Vercel
-- Netlify
-- GitHub Pages
-- AWS S3
-- Firebase Hosting
-
-## Custom Domain Setup
-
-To connect a custom domain to your deployed project, follow the documentation of your chosen hosting provider.
+*Built by [Om](https://github.com/howwohmm)*
